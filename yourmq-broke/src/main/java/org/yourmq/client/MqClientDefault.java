@@ -4,8 +4,11 @@ package org.yourmq.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yourmq.YourMQ;
-import org.yourmq.client.base.*;
+import org.yourmq.base.*;
+import org.yourmq.broker.*;
 import org.yourmq.common.*;
+import org.yourmq.exception.YourSocketException;
+import org.yourmq.utils.MqUtils;
 import org.yourmq.utils.StrUtils;
 
 import java.io.IOException;
@@ -122,7 +125,7 @@ public class MqClientDefault implements MqClient {
         //默认不缩小分片，方便无锁发送
         clientSession = (ClusterClientSession) YourSocket.createClusterClient(serverUrls)
                 .config(c -> {
-                    c.metaPut(MqConstants.YourMQ_VERSION, YourMQ.versionCodeAsString())
+                    c.metaPut(MqConstants.YOURMQ_VERSION, YourMQ.versionCodeAsString())
                             .heartbeatInterval(6_000)
                             .maxMemoryRatio(0.8F)
                             .serialSend(true)
@@ -133,14 +136,14 @@ public class MqClientDefault implements MqClient {
                             .exchangeThreads(1);
 
                     if (StrUtils.isNotEmpty(namespace)) {
-                        c.metaPut(MqConstants.YourMQ_NAMESPACE, namespace);
+                        c.metaPut(MqConstants.YOURMQ_NAMESPACE, namespace);
                     }
 
                     if (clientConfigHandler != null) {
                         clientConfigHandler.clientConfig(c);
                     }
                 })
-                .listen(clientListener)
+                .listen((Listener) clientListener)
                 .open();
 
         return this;
@@ -517,7 +520,7 @@ public class MqClientDefault implements MqClient {
             throw new IllegalArgumentException("Client 'name' can't be empty");
         }
 
-        return new MqTransactionImpl(this);
+        return new MqTransactionImpl((MqClientInternal) this);
     }
 
     /**

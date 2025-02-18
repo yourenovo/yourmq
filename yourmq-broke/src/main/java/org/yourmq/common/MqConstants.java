@@ -10,11 +10,11 @@ public interface MqConstants {
     /**
      * 版本号
      */
-    String FOLKMQ_VERSION = "folkmq-version";
+    String YOURMQ_VERSION = "yourmq-version";
     /**
      * 命名空间
      */
-    String FOLKMQ_NAMESPACE = "folkmq-namespace";
+    String YOURMQ_NAMESPACE = "yourmq-namespace";
 
     /**
      * 元信息：消息主键

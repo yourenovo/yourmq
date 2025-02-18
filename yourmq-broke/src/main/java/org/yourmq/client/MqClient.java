@@ -2,7 +2,10 @@ package org.yourmq.client;
 
 
 
-import org.yourmq.client.base.ClientConfigHandler;
+import org.yourmq.base.ClientConfigHandler;
+import org.yourmq.base.RequestStream;
+import org.yourmq.broker.MqConsumeHandler;
+import org.yourmq.broker.MqTransactionCheckback;
 import org.yourmq.utils.StrUtils;
 
 import java.io.IOException;

@@ -5,8 +5,8 @@
 
 package org.yourmq.utils;
 
-import org.yourmq.client.base.ClientProvider;
-import org.yourmq.client.base.ServerProvider;
+import org.yourmq.base.ClientProvider;
+import org.yourmq.base.ServerProvider;
 import org.yourmq.common.YourSocket;
 
 public class ProviderUtils {

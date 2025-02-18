@@ -5,7 +5,7 @@
 
 package org.yourmq.common;
 
-import org.yourmq.client.base.*;
+import org.yourmq.base.*;
 import org.yourmq.utils.ProviderUtils;
 
 import java.util.HashMap;

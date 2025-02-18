@@ -1,8 +1,6 @@
 package org.yourmq.client;
 
 import lombok.Data;
-import org.noear.folkmq.common.MqAssert;
-import org.noear.YourMQ.utils.StrUtils;
 import org.yourmq.common.MqAssert;
 import org.yourmq.utils.StrUtils;
 
@@ -193,7 +191,7 @@ public class MqMessage implements MqMessageBase {
         }
     }
 
-    protected MqMessage internalSender(String sender) {
+    public MqMessage internalSender(String sender) {
         this.sender = sender;
         return this;
     }

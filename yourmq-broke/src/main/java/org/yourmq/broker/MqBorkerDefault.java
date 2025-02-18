@@ -1,8 +1,10 @@
 package org.yourmq.broker;
 
 
+import org.yourmq.base.Listener;
+import org.yourmq.base.Server;
+import org.yourmq.base.ServerConfigHandler;
 import org.yourmq.common.MqConstants;
-import org.yourmq.common.YourMQ;
 import org.yourmq.common.YourSocket;
 import org.yourmq.utils.StrUtils;
 
@@ -110,7 +112,7 @@ public class MqBorkerDefault implements MqBorker {
             server.config(serverConfigHandler);
         }
 
-        server.config(c -> c.port(port)).listen(serverListener);
+        server.config(c -> c.port(port)).listen((Listener) serverListener);
 
         //开始
         serverListener.start(() -> {

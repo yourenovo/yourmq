@@ -1,6 +1,6 @@
 package org.yourmq.broker;
 
-import org.noear.YourMQ.transport.server.ServerConfigHandler;
+import org.yourmq.base.ServerConfigHandler;
 
 import java.util.Map;
 

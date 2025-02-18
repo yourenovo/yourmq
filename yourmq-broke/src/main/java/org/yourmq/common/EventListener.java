@@ -5,7 +5,7 @@
 
 package org.yourmq.common;
 
-import org.yourmq.client.base.*;
+import org.yourmq.base.*;
 
 import java.io.IOException;
 import java.util.function.BiConsumer;

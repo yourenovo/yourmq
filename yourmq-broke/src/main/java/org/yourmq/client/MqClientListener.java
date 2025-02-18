@@ -1,12 +1,15 @@
 package org.yourmq.client;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
-import org.yourmq.client.base.Session;
-import org.yourmq.common.Entity;
-import org.yourmq.common.EventListener;
-import org.yourmq.common.MqConstants;
-import org.yourmq.common.StringEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.yourmq.base.MqMessageReceivedImpl;
+import org.yourmq.base.ONode;
+import org.yourmq.base.Session;
+import org.yourmq.broker.MqAlarm;
+import org.yourmq.broker.MqSubscription;
+import org.yourmq.common.*;
+import org.yourmq.exception.YourSocketAlarmException;
+import org.yourmq.utils.RunUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,7 +35,7 @@ public class MqClientListener extends EventListener {
         //接收派发指令
         doOn(MqConstants.MQ_EVENT_DISTRIBUTE, (s, m) -> {
             try {
-                MqMessageReceivedImpl message = new MqMessageReceivedImpl(client, s, m);
+                MqMessageReceivedImpl message = new MqMessageReceivedImpl((MqClientInternal) client, s, m);
 
                 try {
                     if (message.isSequence()) {
@@ -55,7 +58,7 @@ public class MqClientListener extends EventListener {
 
         doOn(MqConstants.MQ_EVENT_REQUEST, (s, m) -> {
             try {
-                MqMessageReceivedImpl message = new MqMessageReceivedImpl(client, s, m);
+                MqMessageReceivedImpl message = new MqMessageReceivedImpl((MqClientInternal) client, s, m);
 
                 try {
                     if (client.consumeExecutor == null) {
