@@ -21,7 +21,7 @@ import java.util.concurrent.ScheduledFuture;
  * 消息服务监听器
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public class MqBorkerListener extends MqBorkerListenerBase implements MqBorkerInternal {
     protected final BrokerListener brokerListener = new BrokerListener(); //为 rpc 服务的

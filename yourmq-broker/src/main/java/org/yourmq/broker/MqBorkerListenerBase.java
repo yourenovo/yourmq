@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author your
- * @since 1.1
+ * @since
  */
 public abstract class MqBorkerListenerBase extends EventListener implements MqBorkerInternal {
     protected static final Logger log = LoggerFactory.getLogger(MqBorkerListener.class);

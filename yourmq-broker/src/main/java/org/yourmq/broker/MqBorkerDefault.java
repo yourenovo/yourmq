@@ -13,7 +13,7 @@ import java.util.Map;
  * 消息服务端默认实现
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public class MqBorkerDefault implements MqBorker {
     //服务端监听器

@@ -4,7 +4,7 @@ import org.yourmq.utils.StrUtils;
 
 /**
  * @author your
- * @since 1.4
+ * @since
  */
 public class MqTopicHelper {
     /**

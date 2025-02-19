@@ -10,8 +10,6 @@ import java.io.IOException;
 /**
  * 客户端基类
  *
- * @author noear
- * @since 2.0
  */
 public abstract class ClientBase<T extends ChannelAssistant> implements ClientInternal {
     private static final Logger log = LoggerFactory.getLogger(ClientBase.class);

@@ -9,7 +9,7 @@ import java.io.IOException;
  * 收到的消息接口
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public interface MqMessageReceived extends MqMessageBase {
     /**

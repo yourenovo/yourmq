@@ -7,7 +7,7 @@ import org.yourmq.common.MqConstants;
  * 订阅记录
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public class MqSubscription implements MqConsumeHandler {
     private final String topic;

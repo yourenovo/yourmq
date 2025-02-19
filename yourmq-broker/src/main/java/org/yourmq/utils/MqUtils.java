@@ -9,8 +9,8 @@ import org.yourmq.common.MqConstants;
  * 消息工具类
  *
  * @author your
- * @since 1.0
- * @since 1.2
+ * @since
+ * @since
  */
 public class MqUtils {
     private static MqMetasResolver v1 = new MqMetasResolverV1();

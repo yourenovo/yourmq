@@ -8,7 +8,7 @@ import java.util.Collection;
  * 队列（服务端给每对 [主题#消费者组] 安排一个队列，队列内通过轮询负载平衡派发）
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public interface MqQueue {
     /**

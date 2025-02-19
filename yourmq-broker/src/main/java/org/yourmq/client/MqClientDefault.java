@@ -20,8 +20,8 @@ import java.util.concurrent.ExecutorService;
  * 消息客户端默认实现
  *
  * @author your
- * @since 1.0
- * @since 1.2
+ * @since
+ * @since
  */
 public class MqClientDefault implements MqClient {
     private static final Logger log = LoggerFactory.getLogger(MqClientDefault.class);

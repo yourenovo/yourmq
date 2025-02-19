@@ -6,7 +6,7 @@ import java.util.Date;
  * 消息接口
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public interface MqMessageBase {
     /**

@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 队列基类
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public abstract class MqQueueBase implements MqQueue {
     //消息字典

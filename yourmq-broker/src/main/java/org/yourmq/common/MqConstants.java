@@ -4,7 +4,7 @@ package org.yourmq.common;
  * 常量
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public interface MqConstants {
     /**

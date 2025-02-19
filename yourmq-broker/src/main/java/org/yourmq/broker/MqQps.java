@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * 流速记录器
  *
  * @author your
- * @since 1.5
+ * @since
  */
 public class MqQps {
     private transient long startTime = System.currentTimeMillis();

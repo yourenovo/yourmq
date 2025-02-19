@@ -15,7 +15,7 @@ import java.util.Map;
  * 收到的消息
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public class MqMessageReceivedImpl implements MqMessageReceived {
     private final transient MqClientInternal clientInternal;

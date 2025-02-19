@@ -7,7 +7,7 @@ import org.yourmq.common.Message;
  * 消息草稿
  *
  * @author your
- * @since 1.4
+ * @since
  */
 public class MqDraft {
     public final MqMetasResolver mr;

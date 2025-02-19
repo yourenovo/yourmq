@@ -9,7 +9,7 @@ import org.yourmq.common.Message;
  * 消息元信息分析器
  *
  * @author your
- * @since 1.2
+ * @since
  */
 public interface MqMetasResolver {
     /**

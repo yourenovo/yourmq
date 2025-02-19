@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 队列默认实现
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public class MqQueueDefault extends MqQueueBase implements MqQueue {
     private static final Logger log = LoggerFactory.getLogger(MqQueueDefault.class);

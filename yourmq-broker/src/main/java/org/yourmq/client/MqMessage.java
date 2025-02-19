@@ -14,7 +14,7 @@ import java.util.Map;
  * 消息
  *
  * @author your
- * @since 1.0
+ * @since
  */
 @Data
 public class MqMessage implements MqMessageBase {

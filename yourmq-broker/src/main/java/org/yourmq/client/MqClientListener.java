@@ -21,7 +21,7 @@ import java.util.Set;
  * 客户端监听器
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public class MqClientListener extends EventListener {
     private static final Logger log = LoggerFactory.getLogger(MqClientListener.class);

@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 消息持有人（为消息添加状态信息）
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public class MqMessageHolder implements Delayed {
     public final MqMetasResolver mr;

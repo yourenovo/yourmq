@@ -4,7 +4,7 @@ package org.yourmq.broker;
  * 派发时间生成器
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public class MqNextTime {
     private static long maxConsumeMillis = 1000 * 60 * 3; //3分钟

@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * MqMessageHolder 数据队列
  *
  * @author your
- * @since 1.4
+ * @since
  */
 public class MqMessageHolderQueue extends DelayQueue<MqMessageHolder> {
     //消息计数器

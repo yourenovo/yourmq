@@ -11,7 +11,7 @@ import java.util.List;
  * 客户端，内部扩展接口
  *
  * @author your
- * @since 1.0
+ * @since
  */
 public interface MqClientInternal extends MqClient {
     /**
