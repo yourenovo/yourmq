@@ -1,23 +1,31 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package org.yourmq.base;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yourmq.common.Constants;
 import org.yourmq.exception.YourSocketException;
 
 import java.io.IOException;
 
+/**
+ * 客户端基类
+ *
+ * @author noear
+ * @since 2.0
+ */
 public abstract class ClientBase<T extends ChannelAssistant> implements ClientInternal {
     private static final Logger log = LoggerFactory.getLogger(ClientBase.class);
+
+    //协议处理器
     protected Processor processor = new ProcessorDefault();
+    //心跳处理
     protected ClientHeartbeatHandler heartbeatHandler;
+    //连接处理
     protected ClientConnectHandler connectHandler = new ClientConnectHandlerDefault();
+
+    //配置
     private final ClientConfig config;
+    //助理
     private final T assistant;
 
     public ClientBase(ClientConfig config, T assistant) {
@@ -25,96 +33,149 @@ public abstract class ClientBase<T extends ChannelAssistant> implements ClientIn
         this.assistant = assistant;
     }
 
+    /**
+     * 获取通道助理
+     */
     public T getAssistant() {
-        return this.assistant;
+        return assistant;
     }
-@Override
+
+    /**
+     * 获取配置
+     */
+    @Override
     public ClientConfig getConfig() {
-        return this.config;
+        return config;
     }
+
+    /**
+     * 获取处理器
+     */
     @Override
     public Processor getProcessor() {
-        return this.processor;
+        return processor;
     }
+
+    /**
+     * 获取连接处理器
+     */
     @Override
     public ClientConnectHandler getConnectHandler() {
-        return this.connectHandler;
+        return connectHandler;
     }
+
+    /**
+     * 获取心跳处理
+     */
     @Override
     public ClientHeartbeatHandler getHeartbeatHandler() {
-        return this.heartbeatHandler;
+        return heartbeatHandler;
     }
+
+    /**
+     * 获取心跳间隔（毫秒）
+     */
     @Override
     public long getHeartbeatInterval() {
-        return this.config.getHeartbeatInterval();
+        return config.getHeartbeatInterval();
     }
+
+
+    /**
+     * 设置连接处理器
+     */
     @Override
     public Client connectHandler(ClientConnectHandler connectHandler) {
         if (connectHandler != null) {
             this.connectHandler = connectHandler;
         }
 
-        return (Client) this;
+        return this;
     }
+
+    /**
+     * 设置心跳处理器
+     */
     @Override
     public Client heartbeatHandler(ClientHeartbeatHandler heartbeatHandler) {
         if (heartbeatHandler != null) {
             this.heartbeatHandler = heartbeatHandler;
         }
 
-        return (Client) this;
+        return this;
     }
+
+    /**
+     * 配置
+     */
     @Override
     public Client config(ClientConfigHandler configHandler) {
         if (configHandler != null) {
-            configHandler.clientConfig(this.config);
+            configHandler.clientConfig(config);
         }
-
-        return (Client) this;
+        return this;
     }
+
+    /**
+     * 设置监听器
+     */
     @Override
     public Client listen(Listener listener) {
         if (listener != null) {
-            this.processor.setListener(listener);
+            processor.setListener(listener);
         }
-
-        return (Client) this;
+        return this;
     }
+
+
+    /**
+     * 打开会话
+     */
     @Override
     public ClientSession open() {
         try {
-            return this.openDo(false);
-        } catch (IOException var2) {
-            throw new IllegalStateException(var2);
+            return openDo(false);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
     }
+
+    /**
+     * 打开会话或出异常
+     */
     @Override
     public ClientSession openOrThow() throws IOException {
-        return this.openDo(true);
+        return openDo(true);
     }
 
     private Session openDo(boolean isThow) throws IOException {
-        ClientConnector connector = this.createConnector();
+        ClientConnector connector = createConnector();
         ClientChannel clientChannel = new ClientChannel(this, connector);
 
         try {
             clientChannel.connect();
-            log.info("Socket.D client successfully connected: {link={}}", this.getConfig().getLinkUrl());
-        } catch (Throwable var5) {
+
+            log.info("YourSocket client successfully connected: {link={}}", getConfig().getLinkUrl());
+        } catch (Throwable e) {
             if (isThow) {
-                clientChannel.close(2008);
-                if (!(var5 instanceof RuntimeException) && !(var5 instanceof IOException)) {
-                    throw new YourSocketException("Socket.D client Connection failed", var5);
+
+                clientChannel.close(Constants.CLOSE2008_OPEN_FAIL);
+
+                if (e instanceof RuntimeException || e instanceof IOException) {
+                    throw e;
+                } else {
+                    throw new YourSocketException("YourSocket client Connection failed", e);
                 }
-
-                throw var5;
+            } else {
+                log.info("YourSocket client Connection failed: {link={}}", getConfig().getLinkUrl());
             }
-
-            log.info("Socket.D client Connection failed: {link={}}", this.getConfig().getLinkUrl());
         }
 
         return clientChannel.getSession();
     }
 
+    /**
+     * 创建连接器
+     */
     protected abstract ClientConnector createConnector();
 }

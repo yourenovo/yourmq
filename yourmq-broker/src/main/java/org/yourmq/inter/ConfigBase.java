@@ -3,7 +3,9 @@
 // (powered by FernFlower decompiler)
 //
 
-package org.yourmq.base;
+package org.yourmq.inter;
+
+import org.yourmq.base.*;
 
 import javax.net.ssl.SSLContext;
 import java.nio.charset.Charset;
@@ -14,8 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-
- public abstract class ConfigBase<T extends Config> implements Config {
+public abstract class ConfigBase<T extends Config> implements Config {
     private final boolean clientMode;
     private boolean serialSend;
     private boolean nolockSend;
@@ -50,6 +51,7 @@ import java.util.concurrent.locks.ReentrantLock;
         this.streamManger = new StreamMangerDefault(this);
         this.codec = new CodecDefault(this);
         this.charset = StandardCharsets.UTF_8;
+        this.idGenerator = new GuidGenerator();
         this.fragmentHandler = new FragmentHandlerDefault();
         this.fragmentSize = 16777216;
         this.ioThreads = 1;
@@ -66,28 +68,25 @@ import java.util.concurrent.locks.ReentrantLock;
         this.useSubprotocols = true;
     }
 
-     public T maxMemoryRatio(float maxMemoryRatio) {
-         this.maxMemoryRatio = maxMemoryRatio;
-         this.useMaxMemoryLimit = maxMemoryRatio > 0.2F;
-         return (T) this;
-     }
+    @Override
+    public boolean clientMode() {
+        return this.clientMode;
+    }
 
-     @Override
-     public boolean clientMode() {
-         return this.clientMode;
-     }
-
-     @Override
-     public boolean isSerialSend() {
-         return this.serialSend;
-     }
+    @Override
+    public boolean isSerialSend() {
+        return this.serialSend;
+    }
 
     public T serialSend(boolean serialSend) {
         this.serialSend = serialSend;
         return (T) this;
     }
 
-
+    @Override
+    public boolean isNolockSend() {
+        return this.nolockSend;
+    }
 
     public T nolockSend(boolean nolockSend) {
         this.nolockSend = nolockSend;
@@ -103,7 +102,6 @@ import java.util.concurrent.locks.ReentrantLock;
     public String getRoleName() {
         return this.clientMode() ? "Client" : "Server";
     }
-
     @Override
     public Charset getCharset() {
         return this.charset;
@@ -113,20 +111,22 @@ import java.util.concurrent.locks.ReentrantLock;
         this.charset = charset;
         return (T) this;
     }
-@Override
+
+    @Override
     public Codec getCodec() {
         return this.codec;
     }
-@Override
+
+    @Override
     public FragmentHandler getFragmentHandler() {
         return this.fragmentHandler;
     }
 
     public T fragmentHandler(FragmentHandler fragmentHandler) {
+        ;
         this.fragmentHandler = fragmentHandler;
         return (T) this;
     }
-
     @Override
     public int getFragmentSize() {
         return this.fragmentSize;
@@ -142,17 +142,16 @@ import java.util.concurrent.locks.ReentrantLock;
             return (T) this;
         }
     }
-
     @Override
     public String genId() {
         return this.idGenerator.generate();
     }
 
     public T idGenerator(IdGenerator idGenerator) {
+        ;
         this.idGenerator = idGenerator;
         return (T) this;
     }
-
     @Override
     public SSLContext getSslContext() {
         return this.sslContext;
@@ -162,7 +161,6 @@ import java.util.concurrent.locks.ReentrantLock;
         this.sslContext = sslContext;
         return (T) this;
     }
-
     @Override
     public ExecutorService getWorkExecutor() {
         if (this.workExecutor == null) {
@@ -197,7 +195,6 @@ import java.util.concurrent.locks.ReentrantLock;
     public T exchangeExecutor(ExecutorService workExecutor) {
         return this.workExecutor(workExecutor);
     }
-
     @Override
     public int getIoThreads() {
         return this.ioThreads;
@@ -207,7 +204,6 @@ import java.util.concurrent.locks.ReentrantLock;
         this.ioThreads = ioThreads;
         return (T) this;
     }
-
     @Override
     public int getCodecThreads() {
         return this.codecThreads;
@@ -217,7 +213,6 @@ import java.util.concurrent.locks.ReentrantLock;
         this.codecThreads = codecThreads;
         return (T) this;
     }
-
     @Override
     public int getWorkThreads() {
         return this.workThreads;
@@ -228,14 +223,11 @@ import java.util.concurrent.locks.ReentrantLock;
         return (T) this;
     }
 
-    /**
-     * @deprecated
-     */
+    /** @deprecated */
     @Deprecated
     public T exchangeThreads(int workThreads) {
         return this.workThreads(workThreads);
     }
-
     @Override
     public int getReadBufferSize() {
         return this.readBufferSize;
@@ -245,7 +237,6 @@ import java.util.concurrent.locks.ReentrantLock;
         this.readBufferSize = readBufferSize;
         return (T) this;
     }
-
     @Override
     public int getWriteBufferSize() {
         return this.writeBufferSize;
@@ -255,17 +246,15 @@ import java.util.concurrent.locks.ReentrantLock;
         this.writeBufferSize = writeBufferSize;
         return (T) this;
     }
-
     @Override
     public long getIdleTimeout() {
         return this.idleTimeout;
     }
 
     public T idleTimeout(int idleTimeout) {
-        this.idleTimeout = (long) idleTimeout;
+        this.idleTimeout = (long)idleTimeout;
         return (T) this;
     }
-
     @Override
     public long getRequestTimeout() {
         return this.requestTimeout;
@@ -275,7 +264,6 @@ import java.util.concurrent.locks.ReentrantLock;
         this.requestTimeout = requestTimeout;
         return (T) this;
     }
-
     @Override
     public long getStreamTimeout() {
         return this.streamTimeout;
@@ -285,7 +273,6 @@ import java.util.concurrent.locks.ReentrantLock;
         this.streamTimeout = streamTimeout;
         return (T) this;
     }
-
     @Override
     public int getMaxUdpSize() {
         return this.maxUdpSize;
@@ -306,6 +293,16 @@ import java.util.concurrent.locks.ReentrantLock;
         return this.maxMemoryRatio;
     }
 
+    public T maxMemoryRatio(float maxMemoryRatio) {
+        this.maxMemoryRatio = maxMemoryRatio;
+        this.useMaxMemoryLimit = maxMemoryRatio > 0.2F;
+        return (T) this;
+    }
+
+    public TrafficLimiter getTrafficLimiter() {
+        return this.trafficLimiter;
+    }
+
     public T trafficLimiter(TrafficLimiter trafficLimiter) {
         this.trafficLimiter = trafficLimiter;
         return (T) this;
@@ -315,7 +312,6 @@ import java.util.concurrent.locks.ReentrantLock;
         this.useSubprotocols = useSubprotocols;
         return (T) this;
     }
-
     @Override
     public boolean isUseSubprotocols() {
         return this.useSubprotocols;

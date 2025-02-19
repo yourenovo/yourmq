@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * 客户端监听器
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public class MqClientListener extends EventListener {

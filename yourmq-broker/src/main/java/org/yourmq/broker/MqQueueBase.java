@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * 队列基类
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public abstract class MqQueueBase implements MqQueue {

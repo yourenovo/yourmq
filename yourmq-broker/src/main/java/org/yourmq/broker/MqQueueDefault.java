@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * 队列默认实现
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public class MqQueueDefault extends MqQueueBase implements MqQueue {

@@ -1,7 +1,7 @@
 package org.yourmq.common;
 
 public interface EntityMetas {
-    String META_SOCKETD_VERSION = "Socket.D";
+    String META_SOCKETD_VERSION = "YourSocket";
     /**
      * @deprecated
      */

@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * 消息元信息分析器 v1
  *
- * @author noear
+ * @author your
  * @since 1.2
  */
 public class MqMetasResolverV1 implements MqMetasResolver {

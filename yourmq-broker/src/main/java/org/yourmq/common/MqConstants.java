@@ -3,7 +3,7 @@ package org.yourmq.common;
 /**
  * 常量
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public interface MqConstants {
@@ -147,17 +147,17 @@ public interface MqConstants {
     /**
      * 经理人服务（历史原因这个值不能改）
      */
-    String PROXY_AT_BROKER = "folkmq-server";
+    String PROXY_AT_BROKER = "yourmq-server";
 
     /**
      * 经理人服务
      */
-    String PROXY_AT_BROKER_HASH = "folkmq-server!";
+    String PROXY_AT_BROKER_HASH = "yourmq-server!";
 
     /**
      * 经理人所有服务
      */
-    String PROXY_AT_BROKER_ALL = "folkmq-server*";
+    String PROXY_AT_BROKER_ALL = "yourmq-server*";
 
     /**
      * 事件缓存队列消息费者

@@ -31,7 +31,7 @@ public class HandshakeDefault implements HandshakeInternal {
 
         this.source = source;
         this.uri = URI.create(linkUrl);
-        this.version = source.meta("Socket.D");
+        this.version = source.meta("YourSocket");
         this.paramMap = new ConcurrentHashMap();
         this.outMetaMap = new ConcurrentHashMap();
         if (StrUtils.isEmpty(this.uri.getPath())) {

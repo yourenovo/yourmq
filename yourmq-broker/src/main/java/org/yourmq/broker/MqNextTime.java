@@ -3,7 +3,7 @@ package org.yourmq.broker;
 /**
  * 派发时间生成器
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public class MqNextTime {
@@ -13,7 +13,7 @@ public class MqNextTime {
     public static final long TIME_1M = 1000 * 60;
 
     static {
-        String tmp = System.getProperty("folkmq.maxConsumeWaiting");
+        String tmp = System.getProperty("yourmq.maxConsumeWaiting");
         if (tmp != null) {
             maxConsumeMillis = Integer.parseInt(tmp.toLowerCase().replace("s", "").trim()) * 1000;
         }

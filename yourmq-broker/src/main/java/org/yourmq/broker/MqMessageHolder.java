@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * 消息持有人（为消息添加状态信息）
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public class MqMessageHolder implements Delayed {

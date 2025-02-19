@@ -6,7 +6,7 @@ import org.yourmq.common.Message;
 /**
  * 消息观察者默认实现
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public class MqWatcherDefault implements MqWatcher {

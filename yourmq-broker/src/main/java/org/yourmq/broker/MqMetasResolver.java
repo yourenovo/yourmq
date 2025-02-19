@@ -8,7 +8,7 @@ import org.yourmq.common.Message;
 /**
  * 消息元信息分析器
  *
- * @author noear
+ * @author your
  * @since 1.2
  */
 public interface MqMetasResolver {

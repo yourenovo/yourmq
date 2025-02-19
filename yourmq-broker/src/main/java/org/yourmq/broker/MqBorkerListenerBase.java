@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @author noear
+ * @author your
  * @since 1.1
  */
 public abstract class MqBorkerListenerBase extends EventListener implements MqBorkerInternal {

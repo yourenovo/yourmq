@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 客户端，内部扩展接口
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public interface MqClientInternal extends MqClient {

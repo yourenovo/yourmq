@@ -87,6 +87,7 @@ public class SessionDefault extends SessionBase {
         this.channel.sendPressure(from, pressure);
     }
 
+    @Override
     public SendStream send(String event, Entity entity) throws IOException {
         if (entity == null) {
             entity = new EntityDefault();
@@ -98,6 +99,7 @@ public class SessionDefault extends SessionBase {
         return stream;
     }
 
+    @Override
     public RequestStream sendAndRequest(String event, Entity entity, long timeout) throws IOException {
         if (entity == null) {
             entity = new EntityDefault();
@@ -117,6 +119,7 @@ public class SessionDefault extends SessionBase {
         return stream;
     }
 
+    @Override
     public SubscribeStream sendAndSubscribe(String event, Entity entity, long timeout) throws IOException {
         if (entity == null) {
             entity = new EntityDefault();

@@ -5,7 +5,7 @@
 
 package org.yourmq.base;
 
-import org.yourmq.YourMQ;
+import org.yourmq.common.YourSocket;
 import org.yourmq.utils.StrUtils;
 
 import java.io.IOException;
@@ -71,7 +71,7 @@ public class ClusterClient implements Client {
                 String url = var8[var10];
                 url = url.trim();
                 if (!StrUtils.isEmpty(url)) {
-                    ClientInternal client = (ClientInternal) YourMQ.createClient(url);
+                    ClientInternal client = (ClientInternal) YourSocket.createClient(url);
                     if (this.listener != null) {
                         client.listen(this.listener);
                     }

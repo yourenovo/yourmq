@@ -20,15 +20,18 @@ public abstract class ChannelBase implements Channel {
     public ChannelBase(Config config) {
         this.config = config;
     }
-@Override
+
+    @Override
     public Config getConfig() {
         return this.config;
     }
+
     @Override
 
     public <T> T getAttachment(String name) {
         return (T) this.attachments.get(name);
     }
+
     @Override
 
     public void putAttachment(String name, Object val) {
@@ -39,6 +42,7 @@ public abstract class ChannelBase implements Channel {
         }
 
     }
+
     @Override
 
     public void setHandshake(HandshakeInternal handshake) {
@@ -47,41 +51,50 @@ public abstract class ChannelBase implements Channel {
         }
 
     }
+
     @Override
 
     public HandshakeInternal getHandshake() {
         return this.handshake;
     }
+
     @Override
 
     public void sendConnect(String uri, Map<String, String> metaMap) throws IOException {
-        this.send(Frames.connectFrame(this.getConfig().genId(), uri, metaMap), (StreamInternal)null);
+        this.send(Frames.connectFrame(this.getConfig().genId(), uri, metaMap), (StreamInternal) null);
     }
+
     @Override
 
     public void sendConnack() throws IOException {
-        this.send(Frames.connackFrame(this.getHandshake()), (StreamInternal)null);
+        this.send(Frames.connackFrame(this.getHandshake()), (StreamInternal) null);
     }
-@Override
+
+    @Override
     public void sendPing() throws IOException {
-        this.send(Frames.pingFrame(), (StreamInternal)null);
+        this.send(Frames.pingFrame(), (StreamInternal) null);
     }
+
     @Override
     public void sendPong() throws IOException {
-        this.send(Frames.pongFrame(), (StreamInternal)null);
+        this.send(Frames.pongFrame(), (StreamInternal) null);
     }
+
     @Override
     public void sendClose(int code) throws IOException {
-        this.send(Frames.closeFrame(code), (StreamInternal)null);
+        this.send(Frames.closeFrame(code), (StreamInternal) null);
     }
+
     @Override
     public void sendAlarm(Message from, Entity alarm) throws IOException {
-        this.send(Frames.alarmFrame(from, alarm), (StreamInternal)null);
+        this.send(Frames.alarmFrame(from, alarm), (StreamInternal) null);
     }
+
     @Override
     public void sendPressure(Message from, Entity pressure) throws IOException {
-        this.send(Frames.pressureFrame(from, pressure), (StreamInternal)null);
+        this.send(Frames.pressureFrame(from, pressure), (StreamInternal) null);
     }
+
     @Override
     public void close(int code) {
         if (code > 1000) {

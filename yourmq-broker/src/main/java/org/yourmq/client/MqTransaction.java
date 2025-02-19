@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * 事务
  *
- * @author noear
+ * @author your
  * @since 1.2
  */
 public interface MqTransaction {

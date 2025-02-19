@@ -3,7 +3,7 @@ package org.yourmq.base;
 /**
  * 消息元信息分析器 v2
  *
- * @author noear
+ * @author your
  * @since 1.2
  */
 public class MqMetasResolverV3 extends MqMetasResolverV2 {

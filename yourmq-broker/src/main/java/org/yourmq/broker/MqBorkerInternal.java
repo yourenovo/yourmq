@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * 消息服务内部接口
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public interface MqBorkerInternal {

@@ -1,7 +1,6 @@
 package org.yourmq.broker;
 
 
-import org.yourmq.base.Listener;
 import org.yourmq.base.Server;
 import org.yourmq.base.ServerConfigHandler;
 import org.yourmq.common.MqConstants;
@@ -13,7 +12,7 @@ import java.util.Map;
 /**
  * 消息服务端默认实现
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public class MqBorkerDefault implements MqBorker {
@@ -112,7 +111,7 @@ public class MqBorkerDefault implements MqBorker {
             server.config(serverConfigHandler);
         }
 
-        server.config(c -> c.port(port)).listen((Listener) serverListener);
+        server.config(c -> c.port(port)).listen(serverListener);
 
         //开始
         serverListener.start(() -> {

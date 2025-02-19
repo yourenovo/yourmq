@@ -20,7 +20,7 @@ import java.util.concurrent.ScheduledFuture;
 /**
  * 消息服务监听器
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public class MqBorkerListener extends MqBorkerListenerBase implements MqBorkerInternal {

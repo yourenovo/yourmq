@@ -30,7 +30,7 @@ public class ClientChannel extends ChannelBase implements Channel {
     private AtomicBoolean isConnecting = new AtomicBoolean(false);
 
     public ClientChannel(ClientInternal client, ClientConnector connector) {
-        super((Config) connector.getConfig());
+        super(connector.getConfig());
         this.client = client;
         this.connector = connector;
         this.sessionShell = new SessionDefault(this);

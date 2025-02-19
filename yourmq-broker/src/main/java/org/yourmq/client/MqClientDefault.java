@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * 消息客户端默认实现
  *
- * @author noear
+ * @author your
  * @since 1.0
  * @since 1.2
  */

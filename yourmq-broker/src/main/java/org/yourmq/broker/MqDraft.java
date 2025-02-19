@@ -6,7 +6,7 @@ import org.yourmq.common.Message;
 /**
  * 消息草稿
  *
- * @author noear
+ * @author your
  * @since 1.4
  */
 public class MqDraft {

@@ -6,6 +6,7 @@
 package org.yourmq.common;
 
 import org.yourmq.base.*;
+import org.yourmq.inter.ServerConfig;
 import org.yourmq.utils.ProviderUtils;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class YourSocket {
     }
 
     public static String protocolName() {
-        return "Socket.D";
+        return "YourSocket";
     }
 
     public static String protocolVersion() {
@@ -64,7 +65,7 @@ public class YourSocket {
     }
 
     public static Server createServerOrNull(String schema) {
-        ServerProvider factory = (ServerProvider)serverProviderMap.get(schema);
+        ServerProvider factory = serverProviderMap.get(schema);
         return factory == null ? null : factory.createServer(new ServerConfig(schema));
     }
 
@@ -83,7 +84,7 @@ public class YourSocket {
             throw new IllegalArgumentException("The serverUrl invalid: " + serverUrl);
         } else {
             String schema = serverUrl.substring(0, idx);
-            ClientProvider factory = (ClientProvider)clientProviderMap.get(schema);
+            ClientProvider factory = clientProviderMap.get(schema);
             if (factory == null) {
                 return null;
             } else {

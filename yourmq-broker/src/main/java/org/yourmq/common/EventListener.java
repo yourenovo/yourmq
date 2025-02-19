@@ -11,23 +11,28 @@ import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class EventListener {
+public class EventListener implements Listener {
     private IoConsumer<Session> doOnOpenHandler;
     private MessageHandler doOnMessageHandler;
     private BiConsumer<Session, Message> doOnReplyHandler;
     private BiConsumer<Session, Message> doOnSendHandler;
     private Consumer<Session> doOnCloseHandler;
     private BiConsumer<Session, Throwable> doOnErrorHandler;
+
+    /**
+     * 事件路由选择器
+     */
     private final RouteSelector<MessageHandler> eventRouteSelector;
 
     public EventListener() {
-        this.eventRouteSelector = new RouteSelectorDefault();
+        eventRouteSelector = new RouteSelectorDefault<>();
     }
 
     public EventListener(RouteSelector<MessageHandler> routeSelector) {
-        this.eventRouteSelector = routeSelector;
+        eventRouteSelector = routeSelector;
     }
 
+    //for builder
     public EventListener doOnOpen(IoConsumer<Session> onOpen) {
         this.doOnOpenHandler = onOpen;
         return this;
@@ -49,54 +54,69 @@ public class EventListener {
     }
 
     public EventListener doOn(String event, MessageHandler handler) {
-        this.eventRouteSelector.put(event, handler);
+        eventRouteSelector.put(event, handler);
         return this;
     }
 
-    public void onOpen(Session session) throws IOException {
-        if (this.doOnOpenHandler != null) {
-            this.doOnOpenHandler.accept(session);
-        }
 
+    // for Listener
+
+    @Override
+    public void onOpen(Session session) throws IOException {
+        if (doOnOpenHandler != null) {
+            doOnOpenHandler.accept(session);
+        }
     }
 
+    @Override
     public void onMessage(Session session, Message message) throws IOException {
-        if (this.doOnMessageHandler != null) {
-            this.doOnMessageHandler.handle(session, message);
+        if (doOnMessageHandler != null) {
+            doOnMessageHandler.handle(session, message);
         }
 
-        MessageHandler messageHandler = (MessageHandler) this.eventRouteSelector.select(message.event());
+        MessageHandler messageHandler = eventRouteSelector.select(message.event());
         if (messageHandler != null) {
             messageHandler.handle(session, message);
         }
-
     }
 
+    /**
+     * 收到答复时
+     *
+     * @param session 会话
+     * @param message 消息
+     */
+    @Override
     public void onReply(Session session, Message message) {
-        if (this.doOnReplyHandler != null) {
-            this.doOnReplyHandler.accept(session, message);
+        if (doOnReplyHandler != null) {
+            doOnReplyHandler.accept(session, message);
         }
-
     }
 
+    /**
+     * 发送消息时
+     *
+     * @param session 会话
+     * @param message 消息
+     */
+    @Override
     public void onSend(Session session, Message message) {
-        if (this.doOnSendHandler != null) {
-            this.doOnSendHandler.accept(session, message);
+        if (doOnSendHandler != null) {
+            doOnSendHandler.accept(session, message);
         }
-
     }
 
+    @Override
     public void onClose(Session session) {
-        if (this.doOnCloseHandler != null) {
-            this.doOnCloseHandler.accept(session);
+        if (doOnCloseHandler != null) {
+            doOnCloseHandler.accept(session);
         }
-
     }
 
+    @Override
     public void onError(Session session, Throwable error) {
-        if (this.doOnErrorHandler != null) {
-            this.doOnErrorHandler.accept(session, error);
+        if (doOnErrorHandler != null) {
+            doOnErrorHandler.accept(session, error);
         }
-
     }
 }

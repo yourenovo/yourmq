@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 事务实现
  *
- * @author noear
+ * @author your
  * @since 1.2
  */
 public class MqTransactionImpl implements MqTransaction {

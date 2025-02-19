@@ -5,6 +5,8 @@
 
 package org.yourmq.base;
 
+import org.yourmq.inter.ConfigBase;
+
 import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.Map;

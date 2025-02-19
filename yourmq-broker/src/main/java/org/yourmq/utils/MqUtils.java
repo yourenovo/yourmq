@@ -8,7 +8,7 @@ import org.yourmq.common.MqConstants;
 /**
  * 消息工具类
  *
- * @author noear
+ * @author your
  * @since 1.0
  * @since 1.2
  */

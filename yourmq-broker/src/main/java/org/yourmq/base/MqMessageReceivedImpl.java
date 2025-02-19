@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * 收到的消息
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public class MqMessageReceivedImpl implements MqMessageReceived {

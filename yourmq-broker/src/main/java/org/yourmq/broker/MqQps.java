@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * 流速记录器
  *
- * @author noear
+ * @author your
  * @since 1.5
  */
 public class MqQps {

@@ -15,9 +15,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * 消息客户端
  *
- * @author noear
- * @since 1.0
- * @since 1.2
+ * @author your
  */
 public interface MqClient {
     /**

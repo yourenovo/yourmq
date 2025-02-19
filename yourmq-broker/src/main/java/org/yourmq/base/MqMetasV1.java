@@ -3,7 +3,7 @@ package org.yourmq.base;
 /**
  * 消息元信息 v1
  *
- * @author noear
+ * @author your
  * @since 1.1
  */
 public interface MqMetasV1 {

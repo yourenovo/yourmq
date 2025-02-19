@@ -3,7 +3,7 @@ package org.yourmq.base;
 import org.yourmq.utils.StrUtils;
 
 /**
- * @author noear
+ * @author your
  * @since 1.4
  */
 public class MqTopicHelper {

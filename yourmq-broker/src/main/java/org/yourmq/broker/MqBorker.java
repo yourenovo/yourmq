@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * 消息服务端
  *
- * @author noear
+ * @author your
  * @since 1.0
  */
 public interface MqBorker {
