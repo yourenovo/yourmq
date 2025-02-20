@@ -35,7 +35,7 @@ public class MqClientListener extends EventListener {
         //接收派发指令
         doOn(MqConstants.MQ_EVENT_DISTRIBUTE, (s, m) -> {
             try {
-                MqMessageReceivedImpl message = new MqMessageReceivedImpl((MqClientInternal) client, s, m);
+                MqMessageReceivedImpl message = new MqMessageReceivedImpl(client, s, m);
 
                 try {
                     if (message.isSequence()) {
@@ -66,7 +66,7 @@ public class MqClientListener extends EventListener {
                     } else {
                         client.consumeExecutor.submit(() -> onReceive(s, m, message, true));
                     }
-                }catch (Throwable e) {
+                } catch (Throwable e) {
                     log.warn("Client consume handle error, sid={}", m.sid(), e);
                     client.reply(s, message, false, new MqAlarm(e.getMessage()));
                 }

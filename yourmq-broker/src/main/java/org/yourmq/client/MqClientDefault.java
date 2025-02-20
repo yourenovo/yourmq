@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutorService;
  * @since
  * @since
  */
-public class MqClientDefault implements MqClient {
+public class MqClientDefault implements MqClientInternal {
     private static final Logger log = LoggerFactory.getLogger(MqClientDefault.class);
 
     //事务回查
@@ -530,7 +530,7 @@ public class MqClientDefault implements MqClient {
      * @param keyAry     消息主键集合
      * @param isRollback 是否回滚
      */
-
+    @Override
     public void publish2(String tmid, List<String> keyAry, boolean isRollback) throws IOException {
         if (keyAry == null || keyAry.size() == 0) {
             return;
@@ -567,7 +567,7 @@ public class MqClientDefault implements MqClient {
      * @param isOk    回执
      * @param entity  实体
      */
-  
+    @Override
     public void reply(Session session, MqMessageReceivedImpl message, boolean isOk, Entity entity) throws IOException {
         //确保只答复一次
         if (message.isReplied()) {
