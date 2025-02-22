@@ -8,13 +8,73 @@ package org.yourmq.utils;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GenericUtil {
     private static final Map<Type, Map<String, Type>> genericInfoCached = new HashMap();
 
     public GenericUtil() {
+    }
+
+    private static List<Class<?>> getGenericInterfaces(Class<?> clazz) {
+        return getGenericInterfaces(clazz, new ArrayList());
+    }
+
+    private static List<Class<?>> getGenericInterfaces(Class<?> clazz, List<Class<?>> classes) {
+        Type[] var2 = clazz.getGenericInterfaces();
+        int var3 = var2.length;
+
+        for (int var4 = 0; var4 < var3; ++var4) {
+            Type supIfc = var2[var4];
+            if (supIfc instanceof ParameterizedType) {
+                Class<?> rawClz = (Class) ((ParameterizedType) supIfc).getRawType();
+                classes.add(rawClz);
+                getGenericInterfaces(rawClz, classes);
+            }
+        }
+
+        return classes;
+    }
+
+    public static Class<?>[] resolveTypeArguments(Class<?> clazz, Class<?> genericIfc) {
+        Type[] var2 = clazz.getGenericInterfaces();
+        int var3 = var2.length;
+
+        for (int var4 = 0; var4 < var3; ++var4) {
+            Type supIfc = var2[var4];
+            if (supIfc instanceof ParameterizedType) {
+                ParameterizedType type = (ParameterizedType) supIfc;
+                Class<?> rawClz = (Class) type.getRawType();
+                if (rawClz == genericIfc || getGenericInterfaces(rawClz).contains(genericIfc)) {
+                    return (Class[]) Arrays.stream(type.getActualTypeArguments()).filter((item) -> {
+                        return item instanceof Class;
+                    }).map((item) -> {
+                        return (Class) item;
+                    }).toArray((x$0) -> {
+                        return new Class[x$0];
+                    });
+                }
+            } else if (supIfc instanceof Class) {
+                Class<?>[] classes = resolveTypeArguments((Class) supIfc, genericIfc);
+                if (classes != null) {
+                    return classes;
+                }
+            }
+        }
+
+        Type supClz = clazz.getGenericSuperclass();
+        if (supClz instanceof ParameterizedType) {
+            ParameterizedType type = (ParameterizedType) supClz;
+            return (Class[]) Arrays.stream(type.getActualTypeArguments()).filter((item) -> {
+                return item instanceof Class;
+            }).map((item) -> {
+                return (Class) item;
+            }).toArray((x$0) -> {
+                return new Class[x$0];
+            });
+        } else {
+            return null;
+        }
     }
 
     public static Map<String, Type> getGenericInfo(Type type) {

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>yourmq-broke</artifactId>
+    <artifactId>yourmq-broker</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -22,9 +22,7 @@
         <junit5.version>5.9.1</junit5.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-compiler.version>3.13.0</maven-compiler.version>
-        <maven-assembly.version>3.7.1</maven-assembly.version>
-        <maven-resources.version>3.3.1</maven-resources.version>
+        <maven-compiler.version>3.8.1</maven-compiler.version>
         <netty.version>4.1.112.Final</netty.version>
         <smartsocket.version>1.5.54</smartsocket.version>
         <io.prometheus.version>0.16.0</io.prometheus.version>
@@ -162,5 +160,49 @@
             <artifactId>simpleclient_tracer_otel_agent</artifactId>
             <version>${io.prometheus.version}</version>
         </dependency>
+
+        <!-- Spring Boot Starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>3.2.2</version> <!-- 可根据需求更换版本 -->
+        </dependency>
+        <!-- Spring Boot Configuration Processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>3.2.2</version> <!-- 需和 Spring Boot 版本一致 -->
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version> <!-- 可按需选择合适版本 -->
+                <configuration>
+                    <source>8</source> <!-- 也可以写成 <source>1.8</source> -->
+                    <target>8</target> <!-- 也可以写成 <target>1.8</target> -->
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+    <!-- 其他配置 -->
+    <distributionManagement>
+        <!-- 正式版本仓库 -->
+        <repository>
+            <id>2520138-release-6Vm054</id>
+            <name>Your Repository Name</name>
+            <url>
+                2520138-release-6Vm054::default::https://packages.aliyun.com/67b8ab53789494ef4c6cc79b/maven/2520138-release-6vm054
+            </url>
+        </repository>
+    </distributionManagement>
+    <!-- 其他配置 -->
 </project>
