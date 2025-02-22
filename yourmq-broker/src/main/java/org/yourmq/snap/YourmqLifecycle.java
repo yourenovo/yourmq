@@ -43,15 +43,15 @@ public class YourmqLifecycle {
     private MqBorkerListener brokerServiceListener;
     private ClusterClientSession brokerSession;
     private MqWatcherSnapshotPlus snapshotPlus;
-    ConfigurableListableBeanFactory beanFactory = (ConfigurableListableBeanFactory) springContext.getAutowireCapableBeanFactory();
 
 
     public void start() throws Throwable {
         //初始化快照持久化
         snapshotPlus = new MqWatcherSnapshotPlus();
-        snapshotPlus.save900Condition(MqBrokerConfig.SAVE_900);
-        snapshotPlus.save300Condition(MqBrokerConfig.SAVE_300);
-        snapshotPlus.save100Condition(MqBrokerConfig.SAVE_100);
+        snapshotPlus.save900Condition(1);
+        snapshotPlus.save300Condition(1);
+        snapshotPlus.save100Condition(1);
+        ConfigurableListableBeanFactory beanFactory = (ConfigurableListableBeanFactory) springContext.getAutowireCapableBeanFactory();
 
         beanFactory.registerSingleton("mqWatcherSnapshotPlus", snapshotPlus);
 
@@ -63,7 +63,7 @@ public class YourmqLifecycle {
             startBrokerSession(MqBrokerConfig.PROXY_SERVER, snapshotPlus);
         }
 
-        log.info("Server:main: folkmq-broker: Started (SOCKET.D/{}-{}, folkmq/{})",
+        log.info("Server:main: yourmqmq-broker: Started (SOCKET.D/{}-{}, yourmqmq/{})",
                 YourSocket.protocolVersion(),
                 YourSocket.version(),
                 YourMQ.versionName());
@@ -102,10 +102,11 @@ public class YourmqLifecycle {
 
 
         addApiEvent(localServer.getServerInternal());
+        ConfigurableListableBeanFactory beanFactory = (ConfigurableListableBeanFactory) springContext.getAutowireCapableBeanFactory();
 
         //加入容器
         beanFactory.registerSingleton("mqBorkerInternal", localServer.getServerInternal());
-        log.info("FlokMQ local server started!");
+        log.info("yourmq local server started!");
     }
 
     private void startBrokerSession(String brokerServers, MqWatcherSnapshotPlus snapshotPlus) throws Exception {
@@ -164,7 +165,7 @@ public class YourmqLifecycle {
 
         //同时支持：Broker 和 Multi-Broker
         for (String url : brokerServers.split(",")) {
-            url = url.trim().replace("folkmq://", "sd:tcp://");
+            url = url.trim().replace("yourmqmq://", "sd:tcp://");
 
             if (Utils.isEmpty(url)) {
                 continue;
@@ -206,11 +207,12 @@ public class YourmqLifecycle {
 
         //启动时恢复快照
         brokerServiceListener.start(null);
+        ConfigurableListableBeanFactory beanFactory = (ConfigurableListableBeanFactory) springContext.getAutowireCapableBeanFactory();
 
         //加入容器
         beanFactory.registerSingleton("mqBorkerListener", brokerServiceListener);
 
-        log.info("FlokMQ broker service started!");
+        log.info("yourmq broker service started!");
     }
 
 
