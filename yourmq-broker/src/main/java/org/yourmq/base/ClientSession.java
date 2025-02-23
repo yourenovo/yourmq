@@ -28,7 +28,9 @@ public interface ClientSession extends Closeable {
 
     SubscribeStream sendAndSubscribe(String event, Entity entity, long timeout) throws IOException;
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     default void closeStarting() throws IOException {
         this.preclose();
@@ -36,6 +38,7 @@ public interface ClientSession extends Closeable {
 
     void preclose() throws IOException;
 
+    @Override
     void close() throws IOException;
 
     int closeCode();

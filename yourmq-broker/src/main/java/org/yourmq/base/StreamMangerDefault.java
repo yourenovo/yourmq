@@ -10,10 +10,12 @@ public class StreamMangerDefault implements StreamManger {
     public StreamMangerDefault(Config config) {
         this.config = config;
     }
-@Override
+
+    @Override
     public StreamInternal getStream(String sid) {
-        return (StreamInternal)this.streamMap.get(sid);
+        return (StreamInternal) this.streamMap.get(sid);
     }
+
     @Override
     public void addStream(String sid, StreamInternal stream) {
 
@@ -26,9 +28,10 @@ public class StreamMangerDefault implements StreamManger {
 
         }
     }
+
     @Override
     public void removeStream(String sid) {
-        StreamInternal stream = (StreamInternal)this.streamMap.remove(sid);
+        StreamInternal stream = (StreamInternal) this.streamMap.remove(sid);
         if (stream != null) {
             stream.insuranceCancel();
         }

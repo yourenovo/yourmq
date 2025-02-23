@@ -2,6 +2,7 @@ package org.yourmq.snap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class YourmqLifecycle {
+public class YourmqLifecycle implements DisposableBean {
     private static final Logger log = LoggerFactory.getLogger(YourmqLifecycle.class);
     private static boolean isStandalone;
 
@@ -106,7 +107,7 @@ public class YourmqLifecycle {
 
         //加入容器
         beanFactory.registerSingleton("mqBorkerInternal", localServer.getServerInternal());
-        log.info("yourmq local server started!");
+        log.info("yourmqMQ local server started!");
     }
 
     private void startBrokerSession(String brokerServers, MqWatcherSnapshotPlus snapshotPlus) throws Exception {
@@ -212,7 +213,7 @@ public class YourmqLifecycle {
         //加入容器
         beanFactory.registerSingleton("mqBorkerListener", brokerServiceListener);
 
-        log.info("yourmq broker service started!");
+        log.info("yourmqMQ broker service started!");
     }
 
 
@@ -252,5 +253,32 @@ public class YourmqLifecycle {
     private void addApiEvent(MqBorkerInternal serviceInternal) {
         YourmqApiHandler handler = new YourmqApiHandler(queueForceService, (MqBorkerListener) serviceInternal);
         serviceInternal.doOnEvent(MqConstants.MQ_API, handler);
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        if (localServer != null) {
+            localServer.prestop();
+//            for (Session s1 : localServer.getServerInternal().getSessionAll()) {
+//                RunUtils.runAndTry(s1::closeStarting);
+//            }
+        }
+
+        if (brokerSession != null) {
+            brokerSession.preclose();
+//            for (ClientSession s1 : brokerSession.getSessionAll()) {
+//                RunUtils.runAndTry(s1::closeStarting);
+//            }
+        }
+        if (localServer != null) {
+            //停止时会触发快照
+            localServer.stop();
+        }
+
+        if (brokerSession != null) {
+            brokerSession.close();
+            //停止时会触发快照
+            brokerServiceListener.stop(null);
+        }
     }
 }
