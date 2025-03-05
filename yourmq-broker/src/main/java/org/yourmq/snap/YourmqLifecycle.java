@@ -21,10 +21,12 @@ import org.yourmq.utils.EventBus;
 import org.yourmq.utils.MemoryUtils;
 import org.yourmq.utils.Utils;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+
 public class YourmqLifecycle implements DisposableBean {
     private static final Logger log = LoggerFactory.getLogger(YourmqLifecycle.class);
     private static boolean isStandalone;
@@ -45,7 +47,7 @@ public class YourmqLifecycle implements DisposableBean {
     private ClusterClientSession brokerSession;
     private MqWatcherSnapshotPlus snapshotPlus;
 
-
+    @PostConstruct
     public void start() throws Throwable {
         //初始化快照持久化
         snapshotPlus = new MqWatcherSnapshotPlus();
@@ -72,33 +74,13 @@ public class YourmqLifecycle implements DisposableBean {
 
 
     private void startLocalServerMode(MqWatcherSnapshotPlus snapshotPlus) throws Exception {
-        //通讯架构
-        String schema = "sd:tcp";
 
         //服务端（鉴权为可选。不添加则不鉴权）
-        localServer = YourMQ.createBorker(schema)
-                .config(c -> {
-                    c.serialSend(true)
-                            .maxMemoryRatio(0.8F)
-                            .streamTimeout(MqBrokerConfig.STREAM_TIMEOUT)
-                            .ioThreads(MqBrokerConfig.IO_THREADS)
-                            .codecThreads(MqBrokerConfig.CODEC_THREADS)
-                            .exchangeThreads(MqBrokerConfig.EXCHANGE_THREADS);
-
-                    EventBus.publish(c);
-                })
-                .addAccessAll(MqBrokerConfig.getAccessMap());
+        localServer = YourMQ.createBorker()
+                .start(18602);
 
         if (MqBrokerConfig.SAVE_ENABLE) {
             localServer.watcher(snapshotPlus);
-        }
-
-        if (MqBrokerConfig.YOURMQ_TRANSPORT_PORT > 0) {
-            //如果有配置
-            localServer.start(MqBrokerConfig.YOURMQ_TRANSPORT_PORT);
-        } else {
-            //如果没有
-            localServer.start(80 + 10000);
         }
 
 
@@ -217,38 +199,6 @@ public class YourmqLifecycle implements DisposableBean {
     }
 
 
-    public void preStop() throws Throwable {
-        if (localServer != null) {
-            localServer.prestop();
-//            for (Session s1 : localServer.getServerInternal().getSessionAll()) {
-//                RunUtils.runAndTry(s1::closeStarting);
-//            }
-        }
-
-        if (brokerSession != null) {
-            brokerSession.preclose();
-//            for (ClientSession s1 : brokerSession.getSessionAll()) {
-//                RunUtils.runAndTry(s1::closeStarting);
-//            }
-        }
-
-
-    }
-
-
-    public void stop() throws Throwable {
-        if (localServer != null) {
-            //停止时会触发快照
-            localServer.stop();
-        }
-
-        if (brokerSession != null) {
-            brokerSession.close();
-            //停止时会触发快照
-            brokerServiceListener.stop(null);
-        }
-
-    }
 
     private void addApiEvent(MqBorkerInternal serviceInternal) {
         YourmqApiHandler handler = new YourmqApiHandler(queueForceService, (MqBorkerListener) serviceInternal);
@@ -259,16 +209,10 @@ public class YourmqLifecycle implements DisposableBean {
     public void destroy() throws Exception {
         if (localServer != null) {
             localServer.prestop();
-//            for (Session s1 : localServer.getServerInternal().getSessionAll()) {
-//                RunUtils.runAndTry(s1::closeStarting);
-//            }
         }
 
         if (brokerSession != null) {
             brokerSession.preclose();
-//            for (ClientSession s1 : brokerSession.getSessionAll()) {
-//                RunUtils.runAndTry(s1::closeStarting);
-//            }
         }
         if (localServer != null) {
             //停止时会触发快照
